@@ -13,17 +13,20 @@
 //   });
 
 const urlAllKanaps = "http://localhost:3000/api/products";
+const kanapNumber = 0;
 
 const kanap = {
-  
-}
+  name : arrayKanaps[kanapNumber].name
+};
 
 fetch(urlAllKanaps)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
-    
+.then((res) => res.json())
+.then((data) => {
+  // console.log(data);
+  const arrayKanaps = data;
+  console.log(arrayKanaps);
+});
+
     
 
 //---------------------------------------------------------------------------
