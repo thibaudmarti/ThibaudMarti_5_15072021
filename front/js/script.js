@@ -1,33 +1,49 @@
-// fetch("http://localhost:3000/api/products")
-//     .then((res) => {
-//         console.log(res);
-//     if (res.ok) {
-//       return res.json();
-//     }
-//   })
-//   .then((value) => {
-//     console.log(value);
-//   })
-//   .catch((err) => {
-//     // Une erreur est survenue
-//   });
 
 const urlAllKanaps = "http://localhost:3000/api/products";
-const kanapNumber = 0;
 
-const kanap = {
-  name : arrayKanaps[kanapNumber].name
+// const kanapNumber = 0;
+
+// const kanap = {
+//   name: data[kanapNumber].name,
+//   id: data[kanapNumber]._id,
+//   imageUrl: data[kanapNumber].imageUrl,
+//   altTxt: data[kanapNumber].altTxt,
+//   description: data[kanapNumber].description,
+//   price: data[kanapNumber].price,
+//   colors: data[kanapNumber].colors,
+// };
+
+//--------------------------------------------------------------------------------------
+
+let kanaps;
+
+/*
+*/
+const fetchKanaps = async () => {
+  kanaps = await fetch(urlAllKanaps)
+    .then((res) => res.json());
 };
 
-fetch(urlAllKanaps)
-.then((res) => res.json())
-.then((data) => {
-  // console.log(data);
-  const arrayKanaps = data;
-  console.log(arrayKanaps);
-});
+const showKanaps = async () => {
+  await fetchKanaps();
 
-    
+  items.innerHTML = kanaps
+    .map(
+      (kanap) =>
+        `<a href="./product.html?id=${kanap._id}">
+           <article>
+            <img src="${kanap.imageUrl}" alt="${kanap.altTxt}">
+            <h3 class="productName">${kanap.name}</h3>
+            <p class="productDescription">${kanap.description}</p>
+           </article>
+         </a>`
+    )
+    .join("");
+};
+
+
+showKanaps();
+
 
 //---------------------------------------------------------------------------
 // const items = document.getElementById("items");
@@ -53,7 +69,6 @@ fetch(urlAllKanaps)
 //     // console.log(itemIndex);
 //     createElement();
 
-    
 //     const allItem = () => {
 //       // if (itemIndex >= data.length) {
 
@@ -72,7 +87,7 @@ fetch(urlAllKanaps)
 
 //     allItem();
 //     // createElement();
-    
+
 //     //   items.innerHTML = `
 //     //   <a href="./product.html?id=${itemNumber._id}">
 //     //     <article>
@@ -81,59 +96,51 @@ fetch(urlAllKanaps)
 //     //         <p class="productDescription">${itemNumber.description}</p>
 //     //     </article>
 //     //   </a>`;
-    
+
 //     console.log(items);
 //   });
 
 //----------------------------------------------------------------------------------------
 
-
-  
 /*
-* Request an url and return data as json
-*
-*/
-function getJsonFromApi (url) {
+ * Request an url and return data as json
+ *
+ */
+function getJsonFromApi(url) {
   fetch(url)
-  .then((res) => {
-    //if (res.status == 200)
-    res.json();
-  })
-  .then((data) => {
-    return data;
-  }).catch ();
-};
-
-
+    .then((res) => {
+      //if (res.status == 200)
+      res.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch();
+}
 
 /*
-* Convert a kanaps json array into html representation
-*/
-function getHtmlKanaps (jsonKanaps) {
-    htmlKanaps = "";
+ * Convert a kanaps json array into html representation
+ */
+function getHtmlKanaps(jsonKanaps) {
+  htmlKanaps = "";
 
-    jsonKanaps.array.forEach((kanap) => {
-      htmlKanaps += 
-      `<a href="./product.html?id=${kanap._id}">
+  jsonKanaps.array.forEach((kanap) => {
+    htmlKanaps += `<a href="./product.html?id=${kanap._id}">
         <article>
           <img src="${kanap.imageUrl}" alt="${kanap.altTxt}">
           <h3 class="productName">${kanap.name}</h3>
           <p class="productDescription">${kanap.description}</p>
         </article>
-      </a>`
-    });
+      </a>`;
+  });
 
-    return htmlKanaps;
-  
+  return htmlKanaps;
 }
 
-function insertHtmlInPage (htmlToInsert, idParent) {
+function insertHtmlInPage(htmlToInsert, idParent) {}
 
+function DisplayKanaps() {
+  let jsonKanaps = getJsonFromApi(urlAllKanaps); //.then()
+  let htmlKanaps = getHtmlKanaps(); //.then()
+  insertHtmlInPage();
 }
-
-  function DisplayKanaps () {
-    let jsonKanaps = getJsonFromApi(urlAllKanaps);//.then
-    let htmlKanaps = getHtmlKanaps(); //.then-
-    insertHtmlInPage();
-
-  }
