@@ -15,34 +15,34 @@ const urlAllKanaps = "http://localhost:3000/api/products";
 
 //--------------------------------------------------------------------------------------
 
-let kanaps;
+// let kanaps;
 
-/*
-*/
-const fetchKanaps = async () => {
-  kanaps = await fetch(urlAllKanaps)
-    .then((res) => res.json());
-};
+// /*
+// */
+// const fetchKanaps = async () => {
+//   kanaps = await fetch(urlAllKanaps)
+//     .then((res) => res.json());
+// };
 
-const showKanaps = async () => {
-  await fetchKanaps();
+// const showKanaps = async () => {
+//   await fetchKanaps();
 
-  items.innerHTML = kanaps
-    .map(
-      (kanap) =>
-        `<a href="./product.html?id=${kanap._id}">
-           <article>
-            <img src="${kanap.imageUrl}" alt="${kanap.altTxt}">
-            <h3 class="productName">${kanap.name}</h3>
-            <p class="productDescription">${kanap.description}</p>
-           </article>
-         </a>`
-    )
-    .join("");
-};
+//   items.innerHTML = kanaps
+//     .map(
+//       (kanap) =>
+//         `<a href="./product.html?id=${kanap._id}">
+//            <article>
+//             <img src="${kanap.imageUrl}" alt="${kanap.altTxt}">
+//             <h3 class="productName">${kanap.name}</h3>
+//             <p class="productDescription">${kanap.description}</p>
+//            </article>
+//          </a>`
+//     )
+//     .join("");
+// };
 
 
-showKanaps();
+// showKanaps();
 
 
 //---------------------------------------------------------------------------
@@ -102,29 +102,25 @@ showKanaps();
 
 //----------------------------------------------------------------------------------------
 
+
 /*
  * Request an url and return data as json
  *
  */
-function getJsonFromApi(url) {
-  fetch(url)
-    .then((res) => {
-      //if (res.status == 200)
-      res.json();
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch();
-}
+async function getJsonFromApi(url) {
+  let jsonKanaps = await fetch(url)
+    .then((res) => res.json());
+    return jsonKanaps; 
+    
+};
 
 /*
  * Convert a kanaps json array into html representation
  */
-function getHtmlKanaps(jsonKanaps) {
+async function getHtmlKanaps(jsonKanaps) {
   htmlKanaps = "";
 
-  jsonKanaps.array.forEach((kanap) => {
+  jsonKanaps.forEach((kanap) => {
     htmlKanaps += `<a href="./product.html?id=${kanap._id}">
         <article>
           <img src="${kanap.imageUrl}" alt="${kanap.altTxt}">
@@ -137,10 +133,18 @@ function getHtmlKanaps(jsonKanaps) {
   return htmlKanaps;
 }
 
-function insertHtmlInPage(htmlToInsert, idParent) {}
-
-function DisplayKanaps() {
-  let jsonKanaps = getJsonFromApi(urlAllKanaps); //.then()
-  let htmlKanaps = getHtmlKanaps(); //.then()
-  insertHtmlInPage();
+async function insertHtmlInPage(htmlToInsert, idParent) {
+  document.getElementById(idParent).innerHTML = htmlToInsert;
 }
+
+
+async function DisplayKanaps() {
+  getJsonFromApi(urlAllKanaps).then((jsonKanaps) => {
+    return getHtmlKanaps(jsonKanaps);
+  }).then((htmlKanaps) => {
+    insertHtmlInPage(htmlKanaps, 'items');
+  })
+};
+
+
+DisplayKanaps();
