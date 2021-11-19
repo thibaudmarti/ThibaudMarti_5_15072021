@@ -1,7 +1,5 @@
 //  Objet Kanap
 
-// export const variableTest = 15892;
-
 export class ModelKanap {
   constructor(json) {
     this.name = json.name;
@@ -27,15 +25,19 @@ export class ModelKanap {
   }
 }
 
-// exemple de valeur
-// const Kanap = new ModelKanap(
-//   "some kanap",
-//   0,
-//   1000,
-//   "exemple altTxt",
-//   "exemple desc",
-//   "exemple imgUrl",
-//   ["ex color", "red", "white"]
-// );
+export class KanapOrderLine {
+  constructor(json) {
+    this.name = json.name;
+    this.id = json._id;
+    this.price = json.price;
+    this.altTxt = json.altTxt;
+    this.desc = json.description;
+    this.img = json.imageUrl;
+    this.colors = json.colors;
+  }
 
-// console.log(Kanap);
+  getHeadName() {
+    const headPageName = document.head.querySelector("title");
+    headPageName.innerHTML = `${this.name}`;
+  }
+}
