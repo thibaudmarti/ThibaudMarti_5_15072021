@@ -37,7 +37,7 @@ export class KanapOrderLine {
   }
 
   getHeadName() {
-    const headPageName = document.head.querySelector("title");
+    const headPageName = document.querySelector("title");
     headPageName.innerHTML = `${this.name}`;
   }
 }

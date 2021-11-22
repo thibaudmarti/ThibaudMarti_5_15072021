@@ -67,12 +67,6 @@ async function DisplayKanaps() {
     .then((arrayHtmlKanaps) =>
       insertHtmlInPage(arrayHtmlKanaps.join(""), "items")
     );
-  // .then((jsonKanaps) => {
-  //   return getHtmlKanaps(jsonKanaps);
-  // })
-  // .then((htmlKanaps) => {
-  //   insertHtmlInPage(htmlKanaps, "items");
-  // });
 }
 
 DisplayKanaps();

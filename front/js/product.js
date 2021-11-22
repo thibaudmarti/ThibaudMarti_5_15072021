@@ -4,6 +4,10 @@ KanapOrderLine.getHeadName();
 
 const img = document.querySelector(".item__img");
 
-img.innerHTML = `
+function getImgInHtml() {
+  img.innerHTML = `
 <img src="${ModelKanap.img}" alt="${ModelKanap.altTxt}">
 `;
+}
+
+getImgInHtml();
