@@ -1,17 +1,3 @@
-// import { KanapOrderLine } from "./object.js";
-
-// KanapOrderLine.getHeadName();
-
-// const img = document.querySelector(".item__img");
-
-// function getImgInHtml() {
-//   img.innerHTML = `
-// <img src="${ModelKanap.img}" alt="${ModelKanap.altTxt}">
-// `;
-// }
-
-// getImgInHtml();
-
 //--------------------------------------------------------
 
 /**
@@ -23,16 +9,10 @@ const itemColors = document.getElementById("colors");
 /**
  * récupération de l'id concerné pour l'appel API
  */
-const params = new URL(document.location).searchParams;
-const itemId = params.get("itemId");
+const params = new URL(document.location).search;
+const itemId = params.slice(4);
+// console.log(itemId);
 const apiUrlForAnItem = "http://localhost:3000/api/products/" + itemId;
-
-// const urlId = new URL(document.location).search;
-// console.log(urlId);
-// // const itemId = params.get();
-// // console.log(itemId);
-// const apiUrlForAnItem = "http://localhost:3000/api/products/" + urlId;
-// console.log(apiUrlForAnItem);
 /**
  * Appel API
  */
@@ -86,7 +66,7 @@ function itemInfo(item) {
  */
 const addToCart = document.getElementById("addToCart");
 
-function checkItemsDataStorage(array, itemId, itemColor, itemQuantity) {
+function checkItemsDataStorage(item, array, itemId, itemColor, itemQuantity) {
   for (item of array) {
     if (item.itemDataId == itemId && item.itemDataColor == itemColor) {
       item.itemDataQuantity =
@@ -141,6 +121,7 @@ function addItemToCart(item) {
       itemsDataForStorage = JSON.parse(localStorage.getItem("cart"));
       if (
         checkItemsDataStorage(
+          item,
           itemsDataForStorage,
           itemDataObject.itemDataId,
           itemDataObject.itemDataColor,
@@ -172,6 +153,7 @@ function addItemToCart(item) {
  */
 const main = async () => {
   const itemData = await getKanapDataItem();
+  console.log(itemData);
 
   itemInfo(itemData);
 
