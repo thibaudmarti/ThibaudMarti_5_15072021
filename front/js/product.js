@@ -23,12 +23,16 @@ const itemColors = document.getElementById("colors");
 /**
  * récupération de l'id concerné pour l'appel API
  */
-const params = new URL(document.location);
-console.log(params);
+const params = new URL(document.location).searchParams;
 const itemId = params.get("itemId");
-console.log(itemId);
 const apiUrlForAnItem = "http://localhost:3000/api/products/" + itemId;
 
+// const urlId = new URL(document.location).search;
+// console.log(urlId);
+// // const itemId = params.get();
+// // console.log(itemId);
+// const apiUrlForAnItem = "http://localhost:3000/api/products/" + urlId;
+// console.log(apiUrlForAnItem);
 /**
  * Appel API
  */
@@ -120,7 +124,7 @@ function checkItemQuantity() {
 
 /**
  * ajout du produit au panier
- * @param {*} item
+ * param {*} item
  */
 function addItemToCart(item) {
   let itemsDataForStorage = [];
