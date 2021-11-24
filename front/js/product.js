@@ -21,8 +21,8 @@ const apiUrlForAnItem = "http://localhost:3000/api/products/" + itemId;
 /**
  * Call API for one item
  */
-const getKanapDataItem = () =>
-  fetch(apiUrlForAnItem)
+const getKanapDataItem = (url) =>
+  fetch(url)
     .then(function (res) {
       if (res.ok) {
         return res.json();
@@ -80,7 +80,7 @@ function checkCommandLine() {
  * Main function of the product page
  */
 const mainFunctionProductPage = async () => {
-  const itemData = await getKanapDataItem();
+  const itemData = await getKanapDataItem(apiUrlForAnItem);
   let modelKanap = new ModelKanap(itemData);
   modelKanap.bindDataToProductPage();
 
