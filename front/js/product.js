@@ -1,5 +1,3 @@
-//--------------------------------------------------------
-
 /**
  * Définition de constantes
  */
@@ -9,10 +7,10 @@ const itemColors = document.getElementById("colors");
 /**
  * récupération de l'id concerné pour l'appel API
  */
-const params = new URL(document.location).search;
-const itemId = params.slice(4);
-// console.log(itemId);
+const params = new URL(window.location.href);
+const itemId = params.searchParams.get("id");
 const apiUrlForAnItem = "http://localhost:3000/api/products/" + itemId;
+
 /**
  * Appel API
  */
@@ -104,7 +102,7 @@ function checkItemQuantity() {
 
 /**
  * ajout du produit au panier
- * param {*} item
+ *
  */
 function addItemToCart(item) {
   let itemsDataForStorage = [];
@@ -151,9 +149,9 @@ function addItemToCart(item) {
 /**
  * Fonction principale
  */
-const main = async () => {
+const displayItemInProductPage = async () => {
   const itemData = await getKanapDataItem();
-  console.log(itemData);
+  // console.log(itemData);
 
   itemInfo(itemData);
 
@@ -162,4 +160,4 @@ const main = async () => {
   });
 };
 
-main();
+displayItemInProductPage();

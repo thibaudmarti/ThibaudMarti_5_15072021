@@ -24,20 +24,3 @@ export class ModelKanap {
     return htmlKanaps;
   }
 }
-
-export class KanapOrderLine {
-  constructor(json) {
-    this.name = json.name;
-    this.id = json._id;
-    this.price = json.price;
-    this.altTxt = json.altTxt;
-    this.desc = json.description;
-    this.img = json.imageUrl;
-    this.colors = json.colors;
-  }
-
-  getHeadName() {
-    const headPageName = document.querySelector("title");
-    headPageName.innerHTML = `${this.name}`;
-  }
-}
