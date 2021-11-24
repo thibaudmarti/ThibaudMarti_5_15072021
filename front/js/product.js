@@ -1,8 +1,15 @@
 /**
+ * Import
+ */
+import { ModelKanap } from "./object.js";
+import { KanapOrderLine } from "./object.js";
+
+/**
  * Const
  */
 const itemQuantity = document.getElementById("quantity");
 const itemColors = document.getElementById("colors");
+const addToCart = document.getElementById("addToCart");
 
 /**
  * get id from url for API call
@@ -22,63 +29,11 @@ const getKanapDataItem = () =>
       }
     })
     .catch(function (err) {
+      console.log(err);
       console.log(
         "Une erreur est survenue lors de l'appel des données à l'API"
       );
     });
-
-/**
- * Add item data
- */
-function itemInfo(item) {
-  const pageTitle = document.querySelector("title");
-  pageTitle.textContent = `${item.name}`;
-
-  const itemImage = document.createElement("img");
-  document.querySelector(".item__img").appendChild(itemImage);
-  itemImage.setAttribute("src", `${item.imageUrl}`);
-  itemImage.setAttribute("alt", `${item.altTxt}`);
-
-  const itemName = document.getElementById("title");
-  itemName.textContent = `${item.name}`;
-
-  const itemPrice = document.getElementById("price");
-  itemPrice.textContent = `${item.price}`;
-
-  const itemDescription = document.getElementById("description");
-  itemDescription.textContent = `${item.description}`;
-
-  const itemColorsTable = `${item.colors}`;
-  const itemColorsWords = itemColorsTable.split(",");
-  for (let i = 0; i <= itemColorsWords.length - 1; i++) {
-    const itemColor = document.createElement("option");
-    itemColor.setAttribute("value", itemColorsWords[i]);
-    itemColor.textContent = itemColorsWords[i];
-    itemColors.appendChild(itemColor);
-  }
-  return;
-}
-
-/**
- * Check if item exist in data storage
- */
-const addToCart = document.getElementById("addToCart");
-
-function checkItemsDataStorage(item, array, itemId, itemColor, itemQuantity) {
-  for (item of array) {
-    if (item.itemDataId == itemId && item.itemDataColor == itemColor) {
-      item.itemDataQuantity =
-        parseInt(item.itemDataQuantity, 10) + parseInt(itemQuantity, 10);
-      if (item.itemDataQuantity > 100) {
-        item.itemDataQuantity = 100;
-        alert(
-          "Attention, votre quantité pour cet article dépasse le maximum. Elle passe donc à 100 unités."
-        );
-      }
-      return true;
-    }
-  }
-}
 
 /**
  * Check if color is selected
@@ -101,40 +56,15 @@ function checkItemQuantity() {
 }
 
 /**
- * Add product in local storage for cart
+ * Check in page if color and quantity are selected and right
  *
  */
-function addItemToCart(item) {
-  let itemsDataForStorage = [];
-  const itemDataObject = {
-    itemDataId: itemId,
-    itemDataQuantity: document.getElementById("quantity").value,
-    itemDataColor: document.getElementById("colors").value,
-  };
+function checkCommandLine() {
   if (
     checkItemColor(itemColors) == true &&
     checkItemQuantity(itemQuantity) == true
   ) {
-    if (localStorage.getItem("cart")) {
-      itemsDataForStorage = JSON.parse(localStorage.getItem("cart"));
-      if (
-        checkItemsDataStorage(
-          item,
-          itemsDataForStorage,
-          itemDataObject.itemDataId,
-          itemDataObject.itemDataColor,
-          itemDataObject.itemDataQuantity
-        )
-      ) {
-        localStorage.setItem("cart", JSON.stringify(itemsDataForStorage));
-      } else {
-        itemsDataForStorage.push(itemDataObject);
-        localStorage.setItem("cart", JSON.stringify(itemsDataForStorage));
-      }
-    } else {
-      itemsDataForStorage.push(itemDataObject);
-      localStorage.setItem("cart", JSON.stringify(itemsDataForStorage));
-    }
+    return true;
   } else if (checkItemColor(itemColors) != true) {
     alert(
       "Pour poursuivre l'ajout de produit(s), merci de renseigner la couleur désirée."
@@ -149,15 +79,22 @@ function addItemToCart(item) {
 /**
  * Main function of the product page
  */
-const displayItemInProductPage = async () => {
+const mainFunctionProductPage = async () => {
   const itemData = await getKanapDataItem();
-  // console.log(itemData);
-
-  itemInfo(itemData);
+  let modelKanap = new ModelKanap(itemData);
+  modelKanap.bindDataToProductPage();
 
   addToCart.addEventListener("click", function (e) {
-    addItemToCart(itemData);
+    if (checkCommandLine()) {
+      let orderLine = new KanapOrderLine(
+        modelKanap,
+        itemColors.value,
+        itemQuantity.value
+      );
+      orderLine.exportToLocalStorage();
+    }
   });
 };
 
-displayItemInProductPage();
+mainFunctionProductPage();
+// localStorage.clear();
