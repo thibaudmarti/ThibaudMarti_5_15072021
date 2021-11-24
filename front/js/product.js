@@ -1,18 +1,18 @@
 /**
- * Définition de constantes
+ * Const
  */
 const itemQuantity = document.getElementById("quantity");
 const itemColors = document.getElementById("colors");
 
 /**
- * récupération de l'id concerné pour l'appel API
+ * get id from url for API call
  */
 const params = new URL(window.location.href);
 const itemId = params.searchParams.get("id");
 const apiUrlForAnItem = "http://localhost:3000/api/products/" + itemId;
 
 /**
- * Appel API
+ * Call API for one item
  */
 const getKanapDataItem = () =>
   fetch(apiUrlForAnItem)
@@ -28,7 +28,7 @@ const getKanapDataItem = () =>
     });
 
 /**
- * Ajout des données du produit
+ * Add item data
  */
 function itemInfo(item) {
   const pageTitle = document.querySelector("title");
@@ -60,7 +60,7 @@ function itemInfo(item) {
 }
 
 /**
- * vérifie si l'article existe déjà
+ * Check if item exist in data storage
  */
 const addToCart = document.getElementById("addToCart");
 
@@ -81,7 +81,7 @@ function checkItemsDataStorage(item, array, itemId, itemColor, itemQuantity) {
 }
 
 /**
- * vérifie qu'une couleur est sélectionnée
+ * Check if color is selected
  */
 function checkItemColor() {
   let itemColor = document.getElementById("colors").value;
@@ -91,7 +91,7 @@ function checkItemColor() {
 }
 
 /**
- * vérifie qu'une quantité autorisée est demandée
+ * Check if quantity is selected
  */
 function checkItemQuantity() {
   let itemQuantity = document.getElementById("quantity").value;
@@ -101,7 +101,7 @@ function checkItemQuantity() {
 }
 
 /**
- * ajout du produit au panier
+ * Add product in local storage for cart
  *
  */
 function addItemToCart(item) {
@@ -147,7 +147,7 @@ function addItemToCart(item) {
 }
 
 /**
- * Fonction principale
+ * Main function of the product page
  */
 const displayItemInProductPage = async () => {
   const itemData = await getKanapDataItem();
