@@ -23,7 +23,6 @@ export class ModelKanap {
         <p class="productDescription">${this.desc}</p>
         </article>
         </a>`;
-    // console.log(htmlKanaps);
     return htmlKanaps;
   }
 
@@ -58,6 +57,68 @@ export class ModelKanap {
       itemColors.appendChild(itemColor);
     }
   }
+
+  bindDataToCartPage() {
+    const section = document.getElementById("cart__items");
+    const article = document.createElement("article");
+    const articleContainer = section.appendChild(article);
+    articleContainer.classList.add("cart__item");
+    const div = document.createElement("div");
+    const itemImage = document.createElement("img");
+    article.appendChild(div);
+    div.classList.add("cart__item__img");
+    div.appendChild(itemImage);
+    itemImage.setAttribute("src", `${this.img}`);
+    itemImage.setAttribute("alt", `${this.altTxt}`);
+    article.innerHTML += `<div class="cart__item__content">
+    <div class="cart__item__content__titlePrice">
+      <h2>${this.name}</h2>
+      <p>${this.price}€</p>
+    </div>
+    <div class="cart__item__content__settings">
+      <div class="cart__item__content__settings__quantity">
+        <p>Qté : </p>
+        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+      </div>
+      <div class="cart__item__content__settings__color">
+        <p>Couleur : </p>
+      </div>
+      <div class="cart__item__content__settings__delete">
+        <p class="deleteItem">Supprimer</p>
+      </div>
+    </div>
+  </div>`;
+  }
+  //   bindDataToCartPage() {
+  //     const json = localStorage.getItem("cart");
+  //     const arrayInLocalStorage = JSON.parse(json);
+  //     document.getElementById("cart__items").innerHTML = arrayInLocalStorage
+  //       .map(
+  //         (item) => `
+  //     <article class="cart__item" data-id="${item.itemDataId}">
+  //     <div class="cart__item__img">
+  //       <img src="${this.img}" alt="Photographie d'un canapé">
+  //     </div>
+  //     <div class="cart__item__content">
+  //       <div class="cart__item__content__titlePrice">
+  //         <h2>Nom du produit</h2>
+  //         <p>42,00 €</p>
+  //       </div>
+  //       <div class="cart__item__content__settings">
+  //         <div class="cart__item__content__settings__quantity">
+  //           <p>Qté : ${item.itemDataQuantity}</p>
+  //           <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+  //         </div>
+  //         <div class="cart__item__content__settings__delete">
+  //           <p class="deleteItem">Supprimer</p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </article>
+  // `
+  //       )
+  //       .join("");
+  //   }
 }
 
 export class KanapOrderLine {

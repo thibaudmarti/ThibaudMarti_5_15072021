@@ -54,6 +54,15 @@ function checkItemQuantity() {
     return true;
   }
 }
+/**
+ * Check if quantity is selected
+ */
+function checkQuantitySelected() {
+  let itemQuantitySelected = document.getElementById("quantity").value;
+  if (itemQuantitySelected != 0) {
+    return true;
+  }
+}
 
 /**
  * Check in page if color and quantity are selected and right
@@ -61,15 +70,20 @@ function checkItemQuantity() {
  */
 function checkCommandLine() {
   if (
-    checkItemColor(itemColors) == true &&
-    checkItemQuantity(itemQuantity) == true
+    checkItemColor() == true &&
+    checkItemQuantity() == true &&
+    checkQuantitySelected() == true
   ) {
     return true;
-  } else if (checkItemColor(itemColors) != true) {
+  } else if (checkItemColor() != true) {
     alert(
       "Pour poursuivre l'ajout de produit(s), merci de renseigner la couleur désirée."
     );
-  } else if (checkItemQuantity(itemQuantity) != true) {
+  } else if (checkQuantitySelected() != true) {
+    alert(
+      "Pour poursuivre l'ajout de produit(s), merci de renseigner la quantité désirée."
+    );
+  } else if (checkItemQuantity() != true) {
     alert(
       "La quantité maximale par produit est de 100 unités. Merci de choisir une quantité entre 1 et 100."
     );
@@ -92,6 +106,7 @@ const mainFunctionProductPage = async () => {
         itemQuantity.value
       );
       orderLine.exportToLocalStorage();
+      alert("Vous avez ajouté vos achats au panier !");
     }
   });
 };
