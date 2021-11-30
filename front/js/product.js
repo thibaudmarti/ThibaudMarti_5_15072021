@@ -97,6 +97,7 @@ const mainFunctionProductPage = async () => {
   const itemData = await getKanapDataItem(apiUrlForAnItem);
   let modelKanap = new ModelKanap(itemData);
   modelKanap.bindDataToProductPage();
+  // console.log(modelKanap.name);
 
   addToCart.addEventListener("click", function (e) {
     if (checkCommandLine()) {
