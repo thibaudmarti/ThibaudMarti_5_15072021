@@ -193,7 +193,7 @@ function calculTotalPrice(items) {
 let alphaRegex = /[a-zA-Z\-çñàéèêëïîôüù ]/g;
 let alphaNumberRegex = /[0-9a-zA-Z\-çñàéèêëïîôüù ]/g;
 // let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
-let emailRegex = /^[\w_.-]+@[\w-]+\.[a-z]{2,4}$/i;
+let emailRegex = /^[\w_.-]+@[\w-]+\.[a-z]{2,8}$/i;
 const firstName = document.getElementById("firstName");
 const lastName = document.getElementById("lastName");
 const address = document.getElementById("address");
