@@ -134,44 +134,4 @@ export class KanapOrderLine {
       localStorage.setItem("cart", JSON.stringify(itemsDataForStorage));
     }
   }
-
-  bindDataToCartPage() {
-    const section = document.getElementById("cart__items");
-    const article = document.createElement("article");
-    const articleContainer = section.appendChild(article);
-    articleContainer.classList.add("cart__item");
-    const div = document.createElement("div");
-    const itemImage = document.createElement("img");
-    article.appendChild(div);
-    div.classList.add("cart__item__img");
-    div.appendChild(itemImage);
-    itemImage.setAttribute("src", `${this.model.img}`);
-    itemImage.setAttribute("alt", `${this.model.altTxt}`);
-    article.innerHTML += `<div class="cart__item__content">
-    <div class="cart__item__content__titlePrice">
-      <h2>${this.model.name}</h2>
-      <p>${this.model.price * this.quantity}€</p>
-    </div>
-    <div class="cart__item__content__settings">
-      <div class="cart__item__content__settings__quantity">
-        <p>Qté : </p>
-        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${
-          this.quantity
-        }">
-      </div>
-      <div class="cart__item__content__settings__color">
-        <p>Couleur : ${this.color}</p>
-      </div>
-      <div class="cart__item__content__settings__delete">
-        <p class="deleteItem">Supprimer</p>
-      </div>
-    </div>
-  </div>`;
-  }
-}
-
-export class KanapCart {
-  constructor(kanapOrderLineInLocalStorage) {
-    this.kanapsInCart = kanapOrderLineInLocalStorage;
-  }
 }

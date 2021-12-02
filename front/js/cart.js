@@ -1,11 +1,14 @@
-import { KanapCart } from "./object.js";
-
 /**
  * Const
  */
 const itemsDataCart = JSON.parse(localStorage.getItem("cart"));
+const firstName = document.getElementById("firstName");
+const lastName = document.getElementById("lastName");
+const address = document.getElementById("address");
+const city = document.getElementById("city");
+const email = document.getElementById("email");
 /**
- * Create item for cart
+ * Display kanap in HTML cart page
  */
 function itemCartInfo(item) {
   // Article
@@ -77,7 +80,7 @@ function itemCartInfo(item) {
 }
 
 /**
- * Display kanaps in cart page
+ * Display kanaps in HTML cart page for each kanap in local storage
  */
 function cartPagination(product) {
   const cartList = document.getElementById("cart__items");
@@ -187,18 +190,17 @@ function calculTotalPrice(items) {
 
 /**
  * Regex for form
- * Add function empty cart
+ *
  */
 
 let alphaRegex = /^[\sa-z\-]{1,}$/i;
 let alphaNumberRegex = /^[0-9\sa-z\-]{1,}$/i;
 let emailRegex = /^[\w_.-]+@[\w-_.]+\.[\w.]{2,}$/i;
 
-const firstName = document.getElementById("firstName");
-const lastName = document.getElementById("lastName");
-const address = document.getElementById("address");
-const city = document.getElementById("city");
-const email = document.getElementById("email");
+/**
+ * check every line of form
+ * check the line first name
+ */
 
 const checkFirstName = () => {
   firstName.addEventListener("input", function (e) {
@@ -213,6 +215,10 @@ const checkFirstName = () => {
   });
 };
 
+/**
+ * check the line last name
+ */
+
 const checkLastName = () => {
   lastName.addEventListener("input", function (e) {
     if (alphaRegex.test(lastName.value)) {
@@ -225,6 +231,10 @@ const checkLastName = () => {
     }
   });
 };
+
+/**
+ * check the line address
+ */
 
 const checkAddress = () => {
   address.addEventListener("input", function (e) {
@@ -239,6 +249,10 @@ const checkAddress = () => {
   });
 };
 
+/**
+ * check the line city
+ */
+
 const checkCity = () => {
   city.addEventListener("input", function (e) {
     if (alphaRegex.test(city.value)) {
@@ -251,6 +265,10 @@ const checkCity = () => {
     }
   });
 };
+
+/**
+ * check the line email
+ */
 
 const checkEmail = () => {
   email.addEventListener("input", function (e) {
@@ -265,6 +283,10 @@ const checkEmail = () => {
   });
 };
 
+/**
+ * this function check all input of the form
+ */
+
 function checkInput() {
   checkFirstName();
   checkLastName();
@@ -274,7 +296,7 @@ function checkInput() {
 }
 
 /**
- * Function createContact data
+ * Function createContact data for send data to the API
  */
 let contact = {};
 function createContact() {
@@ -288,11 +310,8 @@ function createContact() {
   return contact;
 }
 
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
 /**
- * Récupération des produits de la commande
+ * Get id from product in the cart
  */
 let productsArray = [];
 function getCartProductsId() {
@@ -302,7 +321,7 @@ function getCartProductsId() {
 }
 
 /**
- * Validation de formulaire
+ * Check if form is right for all lines
  */
 function formValidation() {
   if (
@@ -319,7 +338,7 @@ function formValidation() {
 }
 
 /**
- * Contrôle avant validation
+ * Function for send data to API and show confirm page with the command number
  */
 function validationForOrder() {
   let order = document.getElementById("order");
@@ -337,7 +356,7 @@ function validationForOrder() {
 }
 
 /**
- * Création de l'objet contenant les données à envoyer
+ * Object with data to send to API
  */
 let dataToSend;
 function createDataToSend() {
@@ -349,7 +368,7 @@ function createDataToSend() {
 }
 
 /**
- * Envoi de la requête POST
+ * Send POST request then show confirm page and clear local storage
  */
 function sendOrder(dataToSend) {
   fetch("http://localhost:3000/api/products/order", {
@@ -363,7 +382,6 @@ function sendOrder(dataToSend) {
     .then(async function (res) {
       if (res.ok) {
         let responseData = await res.json();
-        console.log(responseData);
         window.location.href =
           "../html/confirmation.html?orderId=" + responseData.orderId;
         localStorage.clear();
@@ -376,7 +394,7 @@ function sendOrder(dataToSend) {
 }
 
 /**
- * Main function
+ * Main function of the cart page
  */
 
 const mainFunctionCartPage = async () => {
