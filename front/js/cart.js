@@ -90,7 +90,8 @@ function cartPagination(product) {
 }
 
 /**
- * Quantity modifier
+ * Function for quantity, if quantity selected is 0 the product is deleted, if quantity is >100 the quantity value changes to 100
+ * and then change the total quantity article and the total price.
  */
 let allQuantityInput = document.getElementsByClassName("itemQuantity");
 
@@ -98,7 +99,7 @@ function changeQuantity() {
   for (let input of allQuantityInput) {
     let itemToModify = input.closest("article");
 
-    input.addEventListener("change", function (e) {
+    input.addEventListener("change", async function (e) {
       let itemTargetId = itemToModify.getAttribute("data-id");
       let itemTargetColor = itemToModify.getAttribute("data-color");
       let searchItem = itemsDataCart.find(
@@ -106,6 +107,12 @@ function changeQuantity() {
           array.itemDataId == itemTargetId &&
           array.itemDataColor == itemTargetColor
       );
+      if (input.value > 100) {
+        input.value = 100;
+        alert(
+          "Attention, votre quantité pour cet article dépasse le maximum. Elle passe donc à 100 unités."
+        );
+      }
       Object.defineProperty(searchItem, "itemDataQuantity", {
         value: input.value,
       });
@@ -123,7 +130,7 @@ function changeQuantity() {
 }
 
 /**
- * Remove item
+ * Remove item in cart page
  */
 let allDeleteButton = document.getElementsByClassName("deleteItem");
 
@@ -161,13 +168,13 @@ function deleteItemInLocalStorage(targetItem) {
 }
 
 /**
- * Total quantity
+ * Total quantity of all product in cart page
  */
 function totalQuantity() {
   const itemsTotalQuantity = document.querySelectorAll(".itemQuantity");
   let itemsSum = 0;
-  for (let quantity of itemsTotalQuantity) {
-    itemsSum = itemsSum + parseInt(quantity.value, 10);
+  for (let item of itemsTotalQuantity) {
+    itemsSum = itemsSum + parseInt(item.value, 10);
   }
   const totalQuantity = document.getElementById("totalQuantity");
   totalQuantity.textContent = itemsSum;

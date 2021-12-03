@@ -108,6 +108,7 @@ const mainFunctionProductPage = async () => {
       );
       orderLine.exportToLocalStorage();
       alert("Vous avez ajouté vos achats au panier !");
+      window.location.href = "../html/cart.html";
     }
   });
 };
