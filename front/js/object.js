@@ -72,7 +72,7 @@ export class KanapOrderLine {
    */
   exportToLocalStorage() {
     /*
-     * Check if item exist in local storage
+     * Check if item exist in local storage and if the total quantity of item is not above 100
      */
     function checkItemsDataStorage(
       item,

@@ -65,8 +65,7 @@ function checkQuantitySelected() {
 }
 
 /**
- * Check in page if color and quantity are selected and right
- *
+ * Check in page product if color and quantity are selected and right, else return an alert
  */
 function checkCommandLine() {
   if (
@@ -97,8 +96,11 @@ const mainFunctionProductPage = async () => {
   const itemData = await getKanapDataItem(apiUrlForAnItem);
   let modelKanap = new ModelKanap(itemData);
   modelKanap.bindDataToProductPage();
-  // console.log(modelKanap.name);
-
+  /**
+   * When button "Ajouter au panier" is clicked, check if command line are right
+   * then export the product with color and quantity to the local storage
+   * and then open the cart page
+   */
   addToCart.addEventListener("click", function (e) {
     if (checkCommandLine()) {
       let orderLine = new KanapOrderLine(
@@ -114,4 +116,3 @@ const mainFunctionProductPage = async () => {
 };
 
 mainFunctionProductPage();
-// localStorage.clear();

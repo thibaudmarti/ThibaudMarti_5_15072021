@@ -90,7 +90,7 @@ function cartPagination(product) {
 }
 
 /**
- * Function for quantity, if quantity selected is 0 the product is deleted, if quantity is >100 the quantity value changes to 100
+ * Function for quantity, if quantity selected is 0 the product is deleted, if quantity is above 100 the quantity value changes to 100
  * and then change the total quantity article and the total price.
  */
 let allQuantityInput = document.getElementsByClassName("itemQuantity");
@@ -181,7 +181,7 @@ function totalQuantity() {
 }
 
 /**
- * Total price
+ * Total price of all product in cart page
  */
 function calculTotalPrice(items) {
   let itemsTotalPrice = 0;
@@ -205,7 +205,6 @@ let alphaNumberRegex = /^[0-9\sa-z\-]{1,}$/i;
 let emailRegex = /^[\w_.-]+@[\w-_.]+\.[\w.]{2,}$/i;
 
 /**
- * check every line of form
  * check the line first name
  */
 
@@ -318,7 +317,7 @@ function createContact() {
 }
 
 /**
- * Get id from product in the cart
+ * Get id from all products in the cart then push it in an array
  */
 let productsArray = [];
 function getCartProductsId() {
@@ -375,7 +374,7 @@ function createDataToSend() {
 }
 
 /**
- * Send POST request then show confirm page and clear local storage
+ * Send POST request then open confirm page and clear local storage
  */
 function sendOrder(dataToSend) {
   fetch("http://localhost:3000/api/products/order", {

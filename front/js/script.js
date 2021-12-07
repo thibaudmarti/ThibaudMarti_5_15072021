@@ -19,6 +19,10 @@ function insertHtmlInPage(htmlToInsert, idParent) {
   document.getElementById(idParent).innerHTML = htmlToInsert;
 }
 
+/*
+ * Main function of the index page
+ */
+
 async function DisplayKanaps() {
   getJsonFromApi(urlAllKanaps)
     .then((jsonKanaps) =>
