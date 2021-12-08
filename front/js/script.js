@@ -4,7 +4,6 @@ import { ModelKanap } from "./object.js";
 
 /*
  * Request an url and return data as json
- *
  */
 async function getJsonFromApi(url) {
   let jsonKanaps = await fetch(url).then((res) => res.json());
@@ -14,7 +13,6 @@ async function getJsonFromApi(url) {
 /*
  * Convert a kanaps json array into html representation
  */
-
 function insertHtmlInPage(htmlToInsert, idParent) {
   document.getElementById(idParent).innerHTML = htmlToInsert;
 }
@@ -22,8 +20,7 @@ function insertHtmlInPage(htmlToInsert, idParent) {
 /*
  * Main function of the index page
  */
-
-async function DisplayKanaps() {
+async function displayKanaps() {
   getJsonFromApi(urlAllKanaps)
     .then((jsonKanaps) =>
       jsonKanaps.map((jsonKanap) => new ModelKanap(jsonKanap))
@@ -31,9 +28,14 @@ async function DisplayKanaps() {
     .then((arrayKanaps) =>
       arrayKanaps.map((modelKanap) => modelKanap.getHtmlKanaps())
     )
-    .then((arrayHtmlKanaps) =>
-      insertHtmlInPage(arrayHtmlKanaps.join(""), "items")
+    .then(
+      (arrayHtmlKanaps) => insertHtmlInPage(arrayHtmlKanaps.join(""), "items")
+      // console.log(arrayHtmlKanaps)
     );
 }
 
-DisplayKanaps();
+displayKanaps();
+
+// let arrayTest = [1, 2, 3, 4];
+
+// console.log(arrayTest.map(number));
