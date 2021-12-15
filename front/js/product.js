@@ -46,7 +46,7 @@ function checkItemColor() {
 }
 
 /**
- * Check if quantity is selected
+ * Check if quantity is not above 100
  */
 function checkItemQuantity() {
   let itemQuantity = document.getElementById("quantity").value;

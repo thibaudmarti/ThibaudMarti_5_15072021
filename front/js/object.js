@@ -98,7 +98,6 @@ export class KanapOrderLine {
 
     /**
      * Add product in local storage for cart
-     *
      */
     const params = new URL(window.location.href);
     const itemId = params.searchParams.get("id");

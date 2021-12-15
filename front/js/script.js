@@ -5,8 +5,15 @@ import { ModelKanap } from "./object.js";
 /*
  * Request an url and return data as json
  */
-async function getJsonFromApi(url) {
-  let jsonKanaps = await fetch(url).then((res) => res.json());
+async function getJsonFromApi(url, idParent) {
+  let jsonKanaps = await fetch(url).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return (document.getElementById(idParent).textContent =
+        "Un problème est survenue dans la requête de l'API !");
+    }
+  });
   return jsonKanaps;
 }
 
@@ -21,16 +28,15 @@ function insertHtmlInPage(htmlToInsert, idParent) {
  * Main function of the index page
  */
 async function displayKanaps() {
-  getJsonFromApi(urlAllKanaps)
+  getJsonFromApi(urlAllKanaps, "items")
     .then((jsonKanaps) =>
       jsonKanaps.map((jsonKanap) => new ModelKanap(jsonKanap))
     )
     .then((arrayKanaps) =>
       arrayKanaps.map((modelKanap) => modelKanap.getHtmlKanaps())
     )
-    .then(
-      (arrayHtmlKanaps) => insertHtmlInPage(arrayHtmlKanaps.join(""), "items")
-      // console.log(arrayHtmlKanaps)
+    .then((arrayHtmlKanaps) =>
+      insertHtmlInPage(arrayHtmlKanaps.join(""), "items")
     );
 }
 
